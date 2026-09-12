@@ -32,11 +32,6 @@ st.markdown("""
         color: #ff4b4b;
         margin-bottom: 20px;
     }
-    .music-player-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 15px;
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -44,12 +39,10 @@ st.markdown("""
 UPLOAD_DIR = "uploaded_media"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# --- BACKGROUND MUSIC (NICOLINE'S WISH: PLAY MUSIC WITHOUT VIDEO BLOCKING) ---
+# --- BACKGROUND AUDIO (HIDDEN PURE AUDIO STREAM) ---
 st.markdown("""
-    <div class="music-player-container">
-        <iframe width="300" height="80" scrolling="no" frameborder="no" allow="autoplay" 
-        src="https://www.youtube.com/embed/Tv1ZuDURjSs?autoplay=1&loop=1&playlist=Tv1ZuDURjSs"></iframe>
-    </div>
+    <iframe style="display:none;" width="0" height="0" scrolling="no" frameborder="no" allow="autoplay" 
+    src="https://www.youtube.com/embed/Tv1ZuDURjSs?autoplay=1&loop=1&playlist=Tv1ZuDURjSs"></iframe>
 """, unsafe_allow_html=True)
 
 # --- HEADER & COUNTDOWN TIMER ---
