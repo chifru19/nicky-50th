@@ -43,10 +43,13 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 st.title("🎉 NICKYBABES @ 50, THE COUNTDOWN IS OFFICIALY ON! 🎉")
 st.markdown("*Celebrating 50 years of grace, love & blessings!*")
 
-# --- BACKGROUND MUSIC PLAYER ---
-if os.path.exists("celebration_music.mp3"):
-    st.markdown("### 🎶 Celebration Background Music")
-    st.audio("celebration_music.mp3", format="audio/mp3", autoplay=True)
+# --- BACKGROUND MUSIC (YOUTUBE EMBED) ---
+st.markdown("### 🎶 Celebration Background Music")
+st.markdown(
+    '<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" '
+    'src="https://www.youtube.com/embed/Tv1ZuDURjSs?autoplay=1&loop=1&playlist=Tv1ZuDURjSs"></iframe>',
+    unsafe_allow_html=True
+)
 
 # Calculate countdown to Thursday, Sept 17, 2026
 target_date = datetime(2026, 9, 17, 0, 0, 0)
