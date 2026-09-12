@@ -78,25 +78,30 @@ else:
 
 st.markdown("---")
 
-# --- BIRTHDAY PROGRAM SECTION ---
+# --- BIRTHDAY PROGRAM & DETAILED ADDRESSES SECTION ---
 st.subheader("📅 4 Days • 4 Unique Vibes • 1 Unforgettable 50th!")
 st.write("### Thursday 17th – Sunday 20th September")
 
-if os.path.exists("program.jpg"):
+if os.path.exists("program_details.jpg"):
+    st.image("program_details.jpg", caption="Nickybabes 50th Birthday Official Program & Addresses", width='stretch')
+elif os.path.exists("program.jpg"):
     st.image("program.jpg", caption="Full Event Program & Dress Codes", width='stretch')
 
 col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("### 🕺 Thursday 17th September")
-    st.markdown("**Meet & Greet**")
-    st.markdown("* **Dress Code:** 70's Dressing")
-    st.markdown("* *Think bold, groovy and fabulous!*")
+    st.markdown("**FUNKY 70'S • Meet & Greet**")
+    st.markdown("* 📍 **Address:** R. Hora da Pedra, 8200 Albufeira, Portugal")
+    st.markdown("* ⏰ **Start Time:** 19:00 PM")
+    st.markdown("* 🚗 **Travel:** 7 Mins Drive from W Algarve")
+    st.markdown("* 👗 **Dress Code:** Think 70's Vibes! Bright, Bold & Fun")
     
     st.markdown("### ⚓ Friday 18th September")
-    st.markdown("**Boatride Experience**")
-    st.markdown("* **Dress Code:** All White")
-    st.markdown("* *Sail in style, all white everything!*")
+    st.markdown("**ALL WHITE • Boatride**")
+    st.markdown("* 📍 **Address:** AlgarveExperience, Marina de Albufeira, Passeio dos Oceanos, Lote 3 Loja 7, 8200-394 Albufeira, Portugal")
+    st.markdown("* ⏰ **Time:** Meetup at Marina at 16:00")
+    st.markdown("* 👗 **Dress Code:** All White Everything! Clean, Chic & Elegant")
     
     if os.path.exists("boat_image.jpg"):
         st.image("boat_image.jpg", caption="Espírito Oceânico Catamaran", width='stretch')
@@ -104,13 +109,18 @@ with col1:
 
 with col2:
     st.markdown("### 🥂 Saturday 19th September")
-    st.markdown("**Black Tie Event**")
-    st.markdown("* **Men:** Black suit, white shirt, black tie")
-    st.markdown("* **Women:** Black gala dress or white")
+    st.markdown("**BLACK TIE • Gala & After Party**")
+    st.markdown("* 📍 **Address:** W Algarve, Estrada da Galé Sesmarias - CX Postal 290, H, 8200-385 Albufeira, Portugal")
+    st.markdown("* ⏰ **Garden Fountain Gala:** 15:30 – 22:30")
+    st.markdown("* 🎧 **After Party (W Studios):** 22:30 – 02:00")
+    st.markdown("* 👗 **Dress Code:** Black Tie Elegance! Classy, Sophisticated & Timeless")
 
     st.markdown("### 🍖 Sunday 20th September")
-    st.markdown("**BBQ Event**")
-    st.markdown("* **Dress Code:** Blue Jeans & White Top")
+    st.markdown("**SUNDAY BBQ**")
+    st.markdown("* 📍 **Address:** R. Hora da Pedra, 8200 Albufeira, Portugal")
+    st.markdown("* ⏰ **Start Time:** 15:00 PM")
+    st.markdown("* 🚗 **Travel:** 7 Mins Drive from W Algarve")
+    st.markdown("* 👗 **Dress Code:** White Top & Blue Jeans (Casual, Cool & Comfortable)")
 
 st.markdown("---")
 
