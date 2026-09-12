@@ -1,4 +1,5 @@
 import os
+import subprocess
 from datetime import datetime
 import streamlit as st
 
@@ -41,6 +42,11 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 # --- HEADER & COUNTDOWN TIMER ---
 st.title("🎉 NICKYBABES @ 50, THE COUNTDOWN IS OFFICIALY ON! 🎉")
 st.markdown("*Celebrating 50 years of grace, love & blessings!*")
+
+# --- BACKGROUND MUSIC PLAYER ---
+if os.path.exists("celebration_music.mp3"):
+    st.markdown("### 🎶 Celebration Background Music")
+    st.audio("celebration_music.mp3", format="audio/mp3", autoplay=True)
 
 # Calculate countdown to Thursday, Sept 17, 2026
 target_date = datetime(2026, 9, 17, 0, 0, 0)
@@ -116,19 +122,23 @@ if youtube_url:
         st.error("Please enter a valid YouTube URL.")
 
 if uploaded_files:
-    cols = st.columns(3)
-    for i, uploaded_file in enumerate(uploaded_files):
+    for uploaded_file in uploaded_files:
         file_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
-        with open(file_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
+        if not os.path.exists(file_path):
+            with open(file_path, "wb") as f:
+                f.write(uploaded_file.getbuffer())
+            
+            # Automatically push uploaded files to GitHub for permanent persistence
+            try:
+                subprocess.run(["git", "add", file_path], check=False)
+                subprocess.run(["git", "commit", "-m", f"Auto-save guest upload: {uploaded_file.name}"], check=False)
+                subprocess.run(["git", "push", "origin", "main"], check=False)
+            except Exception:
+                pass
 
-        col = cols[i % 3]
-        with col:
-            if uploaded_file.type.startswith("image"):
-                st.image(uploaded_file, caption=uploaded_file.name, width='stretch')
-            elif uploaded_file.type.startswith("video"):
-                st.video(uploaded_file)
+    st.success("✨ Files uploaded and saved successfully!")
 
+# Display all saved media in the folder persistently
 saved_files = os.listdir(UPLOAD_DIR)
 if saved_files:
     st.markdown("### 🌟 Shared Gallery Collection")
