@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import streamlit as st
 
 # --- PAGE CONFIG ---
@@ -8,19 +9,27 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- CUSTOM CSS FOR MOBILE OPTIMIZATION ---
+# --- CUSTOM CSS FOR MOBILE & COUNTDOWN ---
 st.markdown("""
     <style>
-    /* Ensure images and containers are fully responsive on mobile */
     .stImage img {
         border-radius: 10px;
     }
-    /* Improve spacing for mobile viewports */
     .block-container {
         padding-top: 2rem;
         padding-bottom: 2rem;
         padding-left: 1rem;
         padding-right: 1rem;
+    }
+    .countdown-box {
+        background-color: #f0f2f6;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #ff4b4b;
+        margin-bottom: 20px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -29,9 +38,21 @@ st.markdown("""
 UPLOAD_DIR = "uploaded_media"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# --- HEADER & HERO IMAGE ---
+# --- HEADER & COUNTDOWN TIMER ---
 st.title("🎉 NICKYBABES @ 50, THE COUNTDOWN IS OFFICIALY ON! 🎉")
 st.markdown("*Celebrating 50 years of grace, love & blessings!*")
+
+# Calculate countdown to Thursday, Sept 17, 2026
+target_date = datetime(2026, 9, 17, 0, 0, 0)
+today = datetime.now()
+days_left = (target_date - today).days
+
+if days_left > 0:
+    st.markdown(f'<div class="countdown-box">⏳ Only {days_left} Days Left Until the Big Celebration! 🎈</div>', unsafe_allow_html=True)
+elif days_left == 0:
+    st.markdown('<div class="countdown-box">🚨 The Celebration Starts TODAY! Let the Jubilee Begin! 🥂</div>', unsafe_allow_html=True)
+else:
+    st.markdown('<div class="countdown-box">💖 Hope you had an amazing 50th Jubilee celebration! ✨</div>', unsafe_allow_html=True)
 
 if os.path.exists("nicoline.jpg"):
     st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", width='stretch')
@@ -49,7 +70,6 @@ if os.path.exists("program.jpg"):
 else:
     st.info("🖼️ Please save the program flyer as `program.jpg` in your project folder.")
 
-# Use container columns that automatically stack on mobile screens
 col1, col2 = st.columns(2)
 
 with col1:
@@ -79,14 +99,12 @@ st.markdown("---")
 st.subheader("📸 Memories & Gallery Upload")
 st.markdown("Upload photos/videos or share a YouTube link to celebrate Nicky's 50th Jubilee!")
 
-# File uploader optimized for mobile device cameras and photo libraries
 uploaded_files = st.file_uploader(
     "Choose photos or videos...", 
     type=["jpg", "jpeg", "png", "mp4", "mov", "avi"], 
     accept_multiple_files=True
 )
 
-# Text input for YouTube links
 youtube_url = st.text_input("🔗 Or paste a YouTube Video Link here:")
 
 if youtube_url:
@@ -109,7 +127,6 @@ if uploaded_files:
             elif uploaded_file.type.startswith("video"):
                 st.video(uploaded_file)
 
-# Display previously saved media in the folder if any exist
 saved_files = os.listdir(UPLOAD_DIR)
 if saved_files:
     st.markdown("### 🌟 Shared Gallery Collection")
