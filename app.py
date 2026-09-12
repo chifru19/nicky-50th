@@ -8,6 +8,23 @@ st.set_page_config(
     layout="centered"
 )
 
+# --- CUSTOM CSS FOR MOBILE OPTIMIZATION ---
+st.markdown("""
+    <style>
+    /* Ensure images and containers are fully responsive on mobile */
+    .stImage img {
+        border-radius: 10px;
+    }
+    /* Improve spacing for mobile viewports */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- DIRECTORY SETUP ---
 UPLOAD_DIR = "uploaded_media"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -32,6 +49,7 @@ if os.path.exists("program.jpg"):
 else:
     st.info("🖼️ Please save the program flyer as `program.jpg` in your project folder.")
 
+# Use container columns that automatically stack on mobile screens
 col1, col2 = st.columns(2)
 
 with col1:
@@ -61,7 +79,7 @@ st.markdown("---")
 st.subheader("📸 Memories & Gallery Upload")
 st.markdown("Upload photos/videos or share a YouTube link to celebrate Nicky's 50th Jubilee!")
 
-# File uploader for local pictures/videos
+# File uploader optimized for mobile device cameras and photo libraries
 uploaded_files = st.file_uploader(
     "Choose photos or videos...", 
     type=["jpg", "jpeg", "png", "mp4", "mov", "avi"], 
