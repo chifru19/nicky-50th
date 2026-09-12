@@ -67,8 +67,6 @@ st.write("### Thursday 17th – Sunday 20th September")
 
 if os.path.exists("program.jpg"):
     st.image("program.jpg", caption="Full Event Program & Dress Codes", width='stretch')
-else:
-    st.info("🖼️ Please save the program flyer as `program.jpg` in your project folder.")
 
 col1, col2 = st.columns(2)
 
@@ -79,9 +77,13 @@ with col1:
     st.markdown("* *Think bold, groovy and fabulous!*")
     
     st.markdown("### ⚓ Friday 18th September")
-    st.markdown("**Boatride**")
+    st.markdown("**Boatride Experience**")
     st.markdown("* **Dress Code:** All White")
     st.markdown("* *Sail in style, all white everything!*")
+    
+    if os.path.exists("boat_image.jpg"):
+        st.image("boat_image.jpg", caption="Espírito Oceânico Boat", width='stretch')
+    st.markdown("[🔗 View Official Boat Experience Details](https://algarexperience.com/en/boat/espirito-oceanico-2/)")
 
 with col2:
     st.markdown("### 🥂 Saturday 19th September")
