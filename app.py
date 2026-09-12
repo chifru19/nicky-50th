@@ -13,7 +13,7 @@ st.set_page_config(
 # --- CUSTOM CSS FOR MOBILE & COUNTDOWN ---
 st.markdown("""
     <style>
-    .stImage img {
+    .stImage img, .stVideo video {
         border-radius: 10px;
     }
     .block-container {
@@ -71,10 +71,13 @@ elif days_left == 0:
 else:
     st.markdown('<div class="countdown-box">💖 Hope you had an amazing 50th Jubilee celebration! ✨</div>', unsafe_allow_html=True)
 
-if os.path.exists("nicoline.jpg"):
+# --- HERO BIRTHDAY VIDEO ---
+if os.path.exists("hero_video.mp4"):
+    st.video("hero_video.mp4")
+elif os.path.exists("nicoline.jpg"):
     st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", width='stretch')
 else:
-    st.info("🖼️ Please place `nicoline.jpg` in the project folder.")
+    st.info("🖼️ Please place `hero_video.mp4` or `nicoline.jpg` in the project folder.")
 
 st.markdown("---")
 
