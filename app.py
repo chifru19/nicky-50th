@@ -33,12 +33,12 @@ st.markdown("""
         margin-bottom: 20px;
     }
     .music-box {
-        background-color: #fff0f3;
-        padding: 12px;
+        background-color: #f0fdf4;
+        padding: 10px;
         border-radius: 10px;
         text-align: center;
         margin-bottom: 20px;
-        border: 1px solid #ffccd5;
+        border: 1px solid #dcfce7;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -51,12 +51,11 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 st.title("🎉 NICKYBABES @ 50, THE COUNTDOWN IS OFFICIALY ON! 🎉")
 st.markdown("*Celebrating 50 years of grace, love & blessings!*")
 
-# --- COMPACT CELEBRATION MUSIC PLAYER ---
+# --- SPOTIFY PLAYLIST PLAYER (AD-FREE) ---
 st.markdown("""
     <div class="music-box">
-        <p style="margin: 0 0 8px 0; font-weight: bold; color: #d63384; font-size: 1rem;">🎶 Press Play to Hear Nicoline's Celebration Song ("Happy")</p>
-        <iframe width="100%" height="80" scrolling="no" frameborder="no" allow="autoplay" 
-        src="https://www.youtube.com/embed/Tv1ZuDURjSs?autoplay=1&loop=1&playlist=Tv1ZuDURjSs"></iframe>
+        <p style="margin: 0 0 5px 0; font-weight: bold; color: #15803d; font-size: 1rem;">🎶 Nicoline's Celebration Playlist (Ad-Free)</p>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7sbwzGf6xs7nW9r2LtNw9H?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 """, unsafe_allow_html=True)
 
