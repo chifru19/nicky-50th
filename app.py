@@ -32,6 +32,14 @@ st.markdown("""
         color: #ff4b4b;
         margin-bottom: 20px;
     }
+    .music-box {
+        background-color: #fff0f3;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 1px solid #ffccd5;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -39,15 +47,18 @@ st.markdown("""
 UPLOAD_DIR = "uploaded_media"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# --- BACKGROUND AUDIO (HIDDEN PURE AUDIO STREAM) ---
-st.markdown("""
-    <iframe style="display:none;" width="0" height="0" scrolling="no" frameborder="no" allow="autoplay" 
-    src="https://www.youtube.com/embed/Tv1ZuDURjSs?autoplay=1&loop=1&playlist=Tv1ZuDURjSs"></iframe>
-""", unsafe_allow_html=True)
-
 # --- HEADER & COUNTDOWN TIMER ---
 st.title("🎉 NICKYBABES @ 50, THE COUNTDOWN IS OFFICIALY ON! 🎉")
 st.markdown("*Celebrating 50 years of grace, love & blessings!*")
+
+# --- COMPACT CELEBRATION MUSIC PLAYER ---
+st.markdown("""
+    <div class="music-box">
+        <p style="margin: 0 0 8px 0; font-weight: bold; color: #d63384; font-size: 1rem;">🎶 Press Play to Hear Nicoline's Celebration Song ("Happy")</p>
+        <iframe width="100%" height="80" scrolling="no" frameborder="no" allow="autoplay" 
+        src="https://www.youtube.com/embed/Tv1ZuDURjSs?autoplay=1&loop=1&playlist=Tv1ZuDURjSs"></iframe>
+    </div>
+""", unsafe_allow_html=True)
 
 # Calculate countdown to Thursday, Sept 17, 2026
 target_date = datetime(2026, 9, 17, 0, 0, 0)
@@ -128,14 +139,6 @@ if uploaded_files:
         if not os.path.exists(file_path):
             with open(file_path, "wb") as f:
                 f.write(uploaded_file.getbuffer())
-            
-            # Automatically push uploaded files to GitHub for permanent persistence
-            try:
-                subprocess.run(["git", "add", file_path], check=False)
-                subprocess.run(["git", "commit", "-m", f"Auto-save guest upload: {uploaded_file.name}"], check=False)
-                subprocess.run(["git", "push", "origin", "main"], check=False)
-            except Exception:
-                pass
 
     st.success("✨ Files uploaded and saved successfully!")
 
