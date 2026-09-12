@@ -1,0 +1,121 @@
+import os
+import streamlit as st
+
+# --- PAGE CONFIG ---
+st.set_page_config(
+    page_title="NICKYBABES @ 50, THE COUNTDOWN IS OFFICIALY ON!",
+    page_icon="✨",
+    layout="centered"
+)
+
+# --- DIRECTORY SETUP ---
+UPLOAD_DIR = "uploaded_media"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# --- HEADER & HERO IMAGE ---
+st.title("🎉 NICKYBABES @ 50, THE COUNTDOWN IS OFFICIALY ON! 🎉")
+st.markdown("*Celebrating 50 years of grace, love & blessings!*")
+
+if os.path.exists("nicoline.jpg"):
+    st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", width='stretch')
+else:
+    st.info("🖼️ Please place `nicoline.jpg` in the project folder.")
+
+st.markdown("---")
+
+# --- BIRTHDAY PROGRAM SECTION ---
+st.subheader("📅 4 Days • 4 Unique Vibes • 1 Unforgettable 50th!")
+st.write("### Thursday 17th – Sunday 20th September")
+
+if os.path.exists("program.jpg"):
+    st.image("program.jpg", caption="Full Event Program & Dress Codes", width='stretch')
+else:
+    st.info("🖼️ Please save the program flyer as `program.jpg` in your project folder.")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("### 🕺 Thursday 17th September")
+    st.markdown("**Meet & Greet**")
+    st.markdown("* **Dress Code:** 70's Dressing")
+    st.markdown("* *Think bold, groovy and fabulous!*")
+    
+    st.markdown("### ⚓ Friday 18th September")
+    st.markdown("**Boatride**")
+    st.markdown("* **Dress Code:** All White")
+    st.markdown("* *Sail in style, all white everything!*")
+
+with col2:
+    st.markdown("### 🥂 Saturday 19th September")
+    st.markdown("**Black Tie Event**")
+    st.markdown("* **Men:** Black suit, white shirt, black tie")
+    st.markdown("* **Women:** Black gala dress or white")
+
+    st.markdown("### 🍖 Sunday 20th September")
+    st.markdown("**BBQ Event**")
+    st.markdown("* **Dress Code:** Blue Jeans & White Top")
+
+st.markdown("---")
+
+# --- GALLERY & MEDIA UPLOAD SECTION ---
+st.subheader("📸 Memories & Gallery Upload")
+st.markdown("Upload photos/videos or share a YouTube link to celebrate Nicky's 50th Jubilee!")
+
+# File uploader for local pictures/videos
+uploaded_files = st.file_uploader(
+    "Choose photos or videos...", 
+    type=["jpg", "jpeg", "png", "mp4", "mov", "avi"], 
+    accept_multiple_files=True
+)
+
+# Text input for YouTube links
+youtube_url = st.text_input("🔗 Or paste a YouTube Video Link here:")
+
+if youtube_url:
+    try:
+        st.video(youtube_url)
+    except Exception as e:
+        st.error("Please enter a valid YouTube URL.")
+
+if uploaded_files:
+    cols = st.columns(3)
+    for i, uploaded_file in enumerate(uploaded_files):
+        file_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+
+        col = cols[i % 3]
+        with col:
+            if uploaded_file.type.startswith("image"):
+                st.image(uploaded_file, caption=uploaded_file.name, width='stretch')
+            elif uploaded_file.type.startswith("video"):
+                st.video(uploaded_file)
+
+# Display previously saved media in the folder if any exist
+saved_files = os.listdir(UPLOAD_DIR)
+if saved_files:
+    st.markdown("### 🌟 Shared Gallery Collection")
+    gallery_cols = st.columns(3)
+    for i, filename in enumerate(saved_files):
+        if filename.startswith('.'):
+            continue
+        file_path = os.path.join(UPLOAD_DIR, filename)
+        col = gallery_cols[i % 3]
+        with col:
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+                st.image(file_path, caption=filename, width='stretch')
+            elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
+                st.video(file_path)
+
+st.markdown("---")
+
+# --- FOOTER ---
+st.markdown(
+    "<div style='text-align: center; color: gray; font-size: 0.9rem;'>"
+    "Created with ❤️ by <b>Chi Barison Fru</b> for Nicoline Che's 50th Jubilee | "
+    "<a href='https://frankfru.com'>frankfru.com</a> | "
+    "<a href='https://github.com/chifru19'>GitHub</a> | "
+    "<a href='https://www.linkedin.com/in/frank-fru/'>LinkedIn</a>"
+    "</div>",
+    unsafe_allow_html=True,
+)
