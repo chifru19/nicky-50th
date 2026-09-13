@@ -62,7 +62,7 @@ st.markdown("""
 # Calculate countdown to Thursday, Sept 17, 2026
 target_date = datetime(2026, 9, 17, 0, 0, 0)
 today = datetime.now()
-days_left = (target_date - today).days
+days_left = (target_date - today).days + 1
 
 if days_left > 0:
     st.markdown(f'<div class="countdown-box">⏳ Only {days_left} Days Left Until the Big Celebration! 🎈</div>', unsafe_allow_html=True)
