@@ -183,7 +183,7 @@ if saved_files:
     st.markdown("### 🌟 Shared Gallery Collection")
     gallery_cols = st.columns(3)
     for i, filename in enumerate(saved_files):
-        if filename.startswith('.'):
+        if filename.startswith('.') or filename == "nicoline.jpg":
             continue
         file_path = os.path.join(UPLOAD_DIR, filename)
         col = gallery_cols[i % 3]
