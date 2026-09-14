@@ -168,7 +168,22 @@ def get_clean_basename(f_name):
     clean_name = re.sub(r"\s*\(\d+\)$", "", name)
     return clean_name + ext
 
+raw_import re
+def get_clean_basename(f_name):
+    name, ext = os.path.splitext(f_name)
+    clean_name = re.sub(r"\\s*\\(\\d+\\)$", "", name)
+    return clean_name + ext
+
 raw_saved_files = os.listdir(UPLOAD_DIR)
+seen_bases = set()
+saved_files = []
+for filename in sorted(raw_saved_files):
+    if filename.startswith(".") or filename == "nicoline.jpg":
+        continue
+    base = get_clean_basename(filename)
+    if base not in seen_bases:
+        seen_bases.add(base)
+        saved_files.append(filename)
 seen_bases = set()
 saved_files = []
 for filename in sorted(raw_saved_files):
