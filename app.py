@@ -75,7 +75,7 @@ else:
 if os.path.exists("hero_video.mp4"):
     st.video("hero_video.mp4")
 elif os.path.exists("nicoline.jpg"):
-    st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", width='stretch')
+    st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", use_container_width=True)
 else:
     st.info("🖼️ Please place `hero_video.mp4` or `nicoline.jpg` in the project folder.")
 
@@ -86,9 +86,9 @@ st.subheader("📅 4 Days • 4 Unique Vibes • 1 Unforgettable 50th!")
 st.write("### Thursday 17th – Sunday 20th September")
 
 if os.path.exists("program_details.jpg"):
-    st.image("program_details.jpg", caption="Nickybabes 50th Birthday Official Program & Addresses", width='stretch')
+    st.image("program_details.jpg", caption="Nickybabes 50th Birthday Official Program & Addresses", use_container_width=True)
 elif os.path.exists("program.jpg"):
-    st.image("program.jpg", caption="Full Event Program & Dress Codes", width='stretch')
+    st.image("program.jpg", caption="Full Event Program & Dress Codes", use_container_width=True)
 
 col1, col2 = st.columns(2)
 
@@ -107,7 +107,7 @@ with col1:
     st.markdown("* 👗 **Dress Code:** All White Everything! Clean, Chic & Elegant")
     
     if os.path.exists("boat_image.jpg"):
-        st.image("boat_image.jpg", caption="Espírito Oceânico Catamaran", width='stretch')
+        st.image("boat_image.jpg", caption="Espírito Oceânico Catamaran", use_container_width=True)
     st.markdown("[🔗 View Official Boat Experience Details](https://algarexperience.com/en/boat/espirito-oceanico-2/)")
 
 with col2:
@@ -189,7 +189,7 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                st.image(file_path, caption=filename, width='stretch')
+                st.image(file_path, caption=filename, use_container_width=True)
             elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
                 st.video(file_path)
 
