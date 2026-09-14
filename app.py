@@ -168,7 +168,7 @@ def get_clean_basename(f_name):
     clean_name = re.sub(r"\s*\(\d+\)$", "", name)
     return clean_name + ext
 
-raw_import re
+import re
 def get_clean_basename(f_name):
     name, ext = os.path.splitext(f_name)
     clean_name = re.sub(r"\\s*\\(\\d+\\)$", "", name)
