@@ -158,31 +158,14 @@ if uploaded_files:
 
     st.success("✨ Files uploaded and saved successfully!")
 
-# Display all saved media in the folder persistently
-import re
-
-def get_clean_basename(f_name):
-    name, ext = os.path.splitext(f_name)
-    clean_name = re.sub(r"\s*\(\d+\)$", "", name)
-    return clean_name + ext
-
+# Display all saved media in the folder without filtering out duplicates
 raw_saved_files = os.listdir(UPLOAD_DIR)
-seen_bases = set()
-saved_files = []
-for filename in sorted(raw_saved_files):
-    if filename.startswith("."):
-        continue
-    base = get_clean_basename(filename)
-    if base not in seen_bases:
-        seen_bases.add(base)
-        saved_files.append(filename)
+saved_files = [f for f in sorted(raw_saved_files) if not f.startswith(".") and f != "nicoline.jpg"]
 
 if saved_files:
     st.markdown("### 🌟 Shared Gallery Collection")
     gallery_cols = st.columns(3)
     for i, filename in enumerate(saved_files):
-        if filename.startswith('.') or filename == "nicoline.jpg":
-            continue
         file_path = os.path.join(UPLOAD_DIR, filename)
         col = gallery_cols[i % 3]
         with col:
