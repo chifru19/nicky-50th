@@ -59,13 +59,11 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Calculate countdown to Thursday, Sept 17, 2026
-target_date = datetime(2026, 9, 17, 0, 0, 0)
-today = datetime.now()
-days_left = 2  # Hardcoded exact calendar difference for Sept 17
+# Hardcoded countdown to show exactly 1 day left
+days_left = 1
 
 if days_left > 0:
-    st.markdown(f'<div class="countdown-box">⏳ Only {days_left} Days Left Until the Big Celebration! 🎈</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="countdown-box">⏳ Only {days_left} Day Left Until the Big Celebration! 🎈</div>', unsafe_allow_html=True)
 elif days_left == 0:
     st.markdown('<div class="countdown-box">🚨 The Celebration Starts TODAY! Let the Jubilee Begin! 🥂</div>', unsafe_allow_html=True)
 else:
@@ -168,22 +166,7 @@ def get_clean_basename(f_name):
     clean_name = re.sub(r"\s*\(\d+\)$", "", name)
     return clean_name + ext
 
-import re
-def get_clean_basename(f_name):
-    name, ext = os.path.splitext(f_name)
-    clean_name = re.sub(r"\\s*\\(\\d+\\)$", "", name)
-    return clean_name + ext
-
 raw_saved_files = os.listdir(UPLOAD_DIR)
-seen_bases = set()
-saved_files = []
-for filename in sorted(raw_saved_files):
-    if filename.startswith(".") or filename == "nicoline.jpg":
-        continue
-    base = get_clean_basename(filename)
-    if base not in seen_bases:
-        seen_bases.add(base)
-        saved_files.append(filename)
 seen_bases = set()
 saved_files = []
 for filename in sorted(raw_saved_files):
@@ -213,10 +196,10 @@ st.markdown("---")
 # --- FOOTER ---
 st.markdown(
     "<div style='text-align: center; color: gray; font-size: 0.9rem;'>"
-    "Created with ❤️ by <b>Chi Barison Fru</b> for Nicoline Che's 50th Jubilee | "
+    "Created with ❤️ by <b>Frank Fru</b> for Nicoline Che's 50th Jubilee | "
     "<a href='https://frankfru.com'>frankfru.com</a> | "
     "<a href='https://github.com/chifru19'>GitHub</a> | "
-    "<a href='https://www.linkedin.com/in/frank-fru/'>LinkedIn</a>"
+    "<a href='https://www.linkedin.com/in/chifru19'>LinkedIn</a>"
     "</div>",
     unsafe_allow_html=True,
 )
