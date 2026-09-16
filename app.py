@@ -59,8 +59,8 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Hardcoded countdown to show exactly 1 day left
-days_left = 1
+# Corrected countdown for Thursday, 17th September 2026 (Today is day 0!)
+days_left = 0
 
 if days_left > 0:
     st.markdown(f'<div class="countdown-box">⏳ Only {days_left} Day Left Until the Big Celebration! 🎈</div>', unsafe_allow_html=True)
