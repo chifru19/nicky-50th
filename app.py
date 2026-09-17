@@ -93,7 +93,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("### 🕺 Thursday 17th September")
     st.markdown("**FUNKY 70'S • Meet & Greet**")
-    st.markdown("* 📍 **Address:** R. Hora da Pedra, 8200 Albufeira, Portugal")
+    st.markdown("* 📍 **Address:** 44 R. Hora da Pedra, 8200 Albufeira, Portugal")
     st.markdown("* ⏰ **Start Time:** 19:00 PM")
     st.markdown("* 🚗 **Travel:** 7 Mins Drive from W Algarve")
     st.markdown("* 👗 **Dress Code:** Think 70's Vibes! Bright, Bold & Fun")
@@ -118,7 +118,7 @@ with col2:
 
     st.markdown("### 🍖 Sunday 20th September")
     st.markdown("**SUNDAY BBQ**")
-    st.markdown("* 📍 **Address:** R. Hora da Pedra, 8200 Albufeira, Portugal")
+    st.markdown("* 📍 **Address:** 44 R. Hora da Pedra, 8200 Albufeira, Portugal")
     st.markdown("* ⏰ **Start Time:** 15:00 PM")
     st.markdown("* 🚗 **Travel:** 7 Mins Drive from W Algarve")
     st.markdown("* 👗 **Dress Code:** White Top & Blue Jeans (Casual, Cool & Comfortable)")
