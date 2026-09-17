@@ -59,7 +59,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Corrected countdown for Thursday, 17th September 2026 (Today is day 0!)
 days_left = 0
 
 if days_left > 0:
@@ -93,14 +92,14 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("### 🕺 Thursday 17th September")
     st.markdown("**FUNKY 70'S • Meet & Greet**")
-    st.markdown("* 📍 **Address:** 44 R. Hora da Pedra, 8200 Albufeira, Portugal")
+    st.markdown("* 📍 **Address:** [44 R. Hora da Pedra, 8200 Albufeira, Portugal](https://www.google.com/maps/search/?api=1&query=44+R.+Hora+da+Pedra,+8200+Albufeira,+Portugal)")
     st.markdown("* ⏰ **Start Time:** 19:00 PM")
     st.markdown("* 🚗 **Travel:** 7 Mins Drive from W Algarve")
     st.markdown("* 👗 **Dress Code:** Think 70's Vibes! Bright, Bold & Fun")
     
     st.markdown("### ⚓ Friday 18th September")
     st.markdown("**ALL WHITE • Boatride**")
-    st.markdown("* 📍 **Address:** AlgarveExperience, Marina de Albufeira, Passeio dos Oceanos, Lote 3 Loja 7, 8200-394 Albufeira, Portugal")
+    st.markdown("* 📍 **Address:** [AlgarveExperience, Marina de Albufeira, Passeio dos Oceanos, Lote 3 Loja 7, 8200-394 Albufeira, Portugal](https://www.google.com/maps/search/?api=1&query=AlgarveExperience+Marina+de+Albufeira+Passeio+dos+Oceanos+Albufeira+Portugal)")
     st.markdown("* ⏰ **Time:** Meetup at Marina at 16:00")
     st.markdown("* 👗 **Dress Code:** All White Everything! Clean, Chic & Elegant")
     
@@ -111,14 +110,14 @@ with col1:
 with col2:
     st.markdown("### 🥂 Saturday 19th September")
     st.markdown("**BLACK TIE • Gala & After Party**")
-    st.markdown("* 📍 **Address:** W Algarve, Estrada da Galé Sesmarias - CX Postal 290, H, 8200-385 Albufeira, Portugal")
+    st.markdown("* 📍 **Address:** [W Algarve, Estrada da Galé Sesmarias - CX Postal 290, H, 8200-385 Albufeira, Portugal](https://www.google.com/maps/search/?api=1&query=W+Algarve+Estrada+da+Gale+Sesmarias+Albufeira+Portugal)")
     st.markdown("* ⏰ **Garden Fountain Gala:** 15:30 – 22:30")
     st.markdown("* 🎧 **After Party (W Studios):** 22:30 – 02:00")
     st.markdown("* 👗 **Dress Code:** Black Tie Elegance! Classy, Sophisticated & Timeless")
 
     st.markdown("### 🍖 Sunday 20th September")
     st.markdown("**SUNDAY BBQ**")
-    st.markdown("* 📍 **Address:** 44 R. Hora da Pedra, 8200 Albufeira, Portugal")
+    st.markdown("* 📍 **Address:** [44 R. Hora da Pedra, 8200 Albufeira, Portugal](https://www.google.com/maps/search/?api=1&query=44+R.+Hora+da+Pedra,+8200+Albufeira,+Portugal)")
     st.markdown("* ⏰ **Start Time:** 15:00 PM")
     st.markdown("* 🚗 **Travel:** 7 Mins Drive from W Algarve")
     st.markdown("* 👗 **Dress Code:** White Top & Blue Jeans (Casual, Cool & Comfortable)")
@@ -158,7 +157,6 @@ if uploaded_files:
 
     st.success("✨ Files uploaded and saved successfully!")
 
-# Display all saved media in the folder without filtering out duplicates
 raw_saved_files = os.listdir(UPLOAD_DIR)
 saved_files = [f for f in sorted(raw_saved_files) if not f.startswith(".") and f != "nicoline.jpg"]
 
