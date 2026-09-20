@@ -59,12 +59,21 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-days_left = 0
+# --- DYNAMIC COUNTDOWN & OCCASION STATUS ---
+event_start = datetime(2026, 9, 17).date()
+event_end = datetime(2026, 9, 20).date()
+today = datetime.now().date()
 
-if days_left > 0:
-    st.markdown(f'<div class="countdown-box">⏳ Only {days_left} Day Left Until the Big Celebration! 🎈</div>', unsafe_allow_html=True)
-elif days_left == 0:
-    st.markdown('<div class="countdown-box">🚨 The Celebration Starts TODAY! Let the Jubilee Begin! 🥂</div>', unsafe_allow_html=True)
+days_until_start = (event_start - today).days
+days_remaining_in_event = (event_end - today).days
+
+if days_until_start > 0:
+    st.markdown(f'<div class="countdown-box">⏳ Only {days_until_start} Days Left Until the Big Celebration Starts! 🎈</div>', unsafe_allow_html=True)
+elif days_until_start == 0 or (days_until_start < 0 and days_remaining_in_event >= 0):
+    if days_remaining_in_event == 0:
+        st.markdown('<div class="countdown-box">🚨 TODAY IS THE GRAND FINALE! Let’s Make the Last Day of the Jubilee Unforgettable! 🥂</div>', unsafe_allow_html=True)
+    else:
+        st.markdown(f'<div class="countdown-box">🎉 The Jubilee is LIVE! {days_remaining_in_event + 1} days of celebration remaining! 🍾</div>', unsafe_allow_html=True)
 else:
     st.markdown('<div class="countdown-box">💖 Hope you had an amazing 50th Jubilee celebration! ✨</div>', unsafe_allow_html=True)
 
