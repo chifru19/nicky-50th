@@ -2,6 +2,7 @@ import os
 import subprocess
 from datetime import datetime
 import streamlit as st
+from PIL import Image, ImageOps
 
 # --- PAGE CONFIG ---
 st.set_page_config(
@@ -69,6 +70,12 @@ if uploaded_files:
             with open(file_path, "wb") as f:
                 f.write(uploaded_file.getbuffer())
             try:
+                # Auto-orient uploaded images
+                if uploaded_file.name.lower().endswith(('.jpg', '.jpeg', '.png')):
+                    img = Image.open(file_path)
+                    img = ImageOps.exif_transpose(img)
+                    img.save(file_path)
+                
                 subprocess.run(["git", "add", file_path], check=True)
                 subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
@@ -88,7 +95,13 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                st.image(file_path, caption=filename, width='stretch')
+                try:
+                    img = Image.open(file_path)
+                    img = ImageOps.exif_transpose(img)
+                    st.image(img, caption=filename, width='stretch')
+                except Exception:
+                    st.image(file_path, caption=filename, width='stretch')
+                
                 with open(file_path, "rb") as file:
                     st.download_button(
                         label="📥 Download Photo",
