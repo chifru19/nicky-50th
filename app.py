@@ -100,7 +100,7 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                st.image(file_path, caption=filename, use_container_width=True)
+                st.image(file_path, caption=filename, width='stretch')
                 with open(file_path, "rb") as file:
                     st.download_button(
                         label="📥 Download Photo",
