@@ -52,7 +52,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 st.title("🎉 NICKYBABES @ 50: THE MEMORY ARCHIVE ✨")
 st.markdown("*Reliving 4 days of grace, style, love, and unforgettable celebration!*")
 
-st.markdown('<div class="archive-box">💖 What an incredible milestone! Thank you to everyone who made Nicoline’s 50th Jubilee magical. 🥂✨</div>', unsafe_allow_html=True)
+st.markdown('<div class="archive-box">💖 Welcome to the official photo sharing hub! Browse, download, and upload your favorite memories from Nicoline’s 50th Jubilee. 🥂✨</div>', unsafe_allow_html=True)
 
 # --- SPOTIFY PLAYLIST PLAYER (AD-FREE) ---
 st.markdown("""
@@ -64,42 +64,12 @@ st.markdown("""
 
 st.markdown("---")
 
-# --- RECAP OF THE 4-DAY VIBES ---
-st.subheader("📅 The 4-Day Jubilee Recap (Sept 17th – 20th)")
-st.write("### Albufeira, Portugal • Unforgettable Memories")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("### 🕺 Thursday 17th September")
-    st.markdown("**FUNKY 70'S • Meet & Greet**")
-    st.markdown("* 📍 [44 R. Hora da Pedra, Albufeira](https://www.google.com/maps/search/?api=1&query=44+R.+Hora+da+Pedra,+8200+Albufeira,+Portugal)")
-    st.markdown("* 👗 *Vibe Check:* Bright, Bold & Fun 70's Style!")
-    
-    st.markdown("### ⚓ Friday 18th September")
-    st.markdown("**ALL WHITE • Boatride**")
-    st.markdown("* 📍 [Marina de Albufeira (AlgarveExperience)](https://www.google.com/maps/search/?api=1&query=AlgarveExperience+Marina+de+Albufeira)")
-    st.markdown("* 👗 *Vibe Check:* Clean, Chic & Elegant All-White")
-
-with col2:
-    st.markdown("### 🥂 Saturday 19th September")
-    st.markdown("**BLACK TIE • Gala & After Party**")
-    st.markdown("* 📍 [W Algarve, Sesmarias](https://www.google.com/maps/search/?api=1&query=W+Algarve+Estrada+da+Gale+Sesmarias+Albufeira+Portugal)")
-    st.markdown("* 👗 *Vibe Check:* Garden Fountain Gala & W Studios After-Party")
-
-    st.markdown("### 🍖 Sunday 20th September")
-    st.markdown("**SUNDAY BBQ**")
-    st.markdown("* 📍 [44 R. Hora da Pedra, Albufeira](https://www.google.com/maps/search/?api=1&query=44+R.+Hora+da+Pedra,+8200+Albufeira,+Portugal)")
-    st.markdown("* 👗 *Vibe Check:* White Top & Blue Jeans")
-
-st.markdown("---")
-
 # --- GALLERY & MEDIA UPLOAD SECTION ---
 st.subheader("📸 Event Photo & Video Gallery")
-st.markdown("Explore moments captured from the celebration or add your own snapshots to the archive!")
+st.markdown("Upload new photos/videos or browse the collection below. Click on any image or use your device options to download/save your favorite moments!")
 
 uploaded_files = st.file_uploader(
-    "Upload additional photos or videos...", 
+    "Upload your photos or videos...", 
     type=["jpg", "jpeg", "png", "mp4", "mov", "avi"], 
     accept_multiple_files=True
 )
@@ -138,7 +108,7 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                st.image(file_path, caption=filename)
+                st.image(file_path, caption=filename, use_container_width=True)
             elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
                 st.video(file_path)
 
