@@ -55,7 +55,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 st.title("🎉 NICKYBABES @ 50: THE MEMORY ARCHIVE ✨")
 st.markdown("*Reliving 4 days of grace, style, love, and unforgettable celebration!*")
 
-st.markdown('<div class="archive-box">💖 Welcome to the official memory hub! Browse, filter by event days, download, upload memories, and leave your wishes. 🥂✨</div>', unsafe_allow_html=True)
+st.markdown('<div class="archive-box">💖 Welcome to the official memory hub! Browse, download, upload memories, and leave your wishes. 🥂✨</div>', unsafe_allow_html=True)
 
 # --- HIGHLIGHT YOUTUBE VIDEO ---
 st.subheader("🎬 Celebration Highlight Video")
@@ -90,7 +90,7 @@ st.markdown("---")
 
 # --- GALLERY & MEDIA UPLOAD SECTION ---
 st.subheader("📸 Event Photo & Video Gallery")
-st.markdown("Sort by event days, download single items, or download the entire archive in one click!")
+st.markdown("Download single items, upload new memories, or download the entire archive in one click!")
 
 # --- DOWNLOAD ALL AS ZIP ---
 raw_saved_files = os.listdir(UPLOAD_DIR)
@@ -138,76 +138,48 @@ if uploaded_files:
 
     st.success("✨ New memories added and saved successfully!")
 
-# --- CATEGORY / DAY FILTER TABS ---
+# --- SHARED MEMORY COLLECTION GALLERY ---
 raw_saved_files = os.listdir(UPLOAD_DIR)
 saved_files = [f for f in sorted(raw_saved_files) if not f.startswith(".") and f != "nicoline.jpg"]
 
 if saved_files:
     st.markdown("### 🌟 Shared Memory Collection")
-    
-    tab_all, tab_70s, tab_boat, tab_gala, tab_bbq = st.tabs([
-        "✨ All Memories", 
-        "🕺 70s Meet & Greet", 
-        "⚓ Boat Ride", 
-        "🥂 Gala & Party", 
-        "🍖 Sunday BBQ"
-    ])
-    
-    def render_gallery(file_subset, tab_prefix):
-        if not file_subset:
-            st.info("No media found in this category yet.")
-            return
-        gallery_cols = st.columns(3)
-        for i, filename in enumerate(file_subset):
-            file_path = os.path.join(UPLOAD_DIR, filename)
-            col = gallery_cols[i % 3]
-            with col:
-                unique_key = f"{tab_prefix}_{filename}_{i}"
-                if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                    try:
-                        img = Image.open(file_path)
-                        img = ImageOps.exif_transpose(img)
-                        st.image(img, caption=filename, width='stretch')
-                        
-                        # Fullscreen Lightbox expander view
-                        with st.expander(f"🔍 Fullscreen View##{unique_key}"):
-                            st.image(img, caption=filename, width='stretch')
-                    except Exception:
-                        st.image(file_path, caption=filename, width='stretch')
+    gallery_cols = st.columns(3)
+    for i, filename in enumerate(saved_files):
+        file_path = os.path.join(UPLOAD_DIR, filename)
+        col = gallery_cols[i % 3]
+        with col:
+            unique_key = f"media_{filename}_{i}"
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+                try:
+                    img = Image.open(file_path)
+                    img = ImageOps.exif_transpose(img)
+                    st.image(img, caption=filename, width='stretch')
                     
-                    with open(file_path, "rb") as file:
-                        st.download_button(
-                            label="📥 Download Photo",
-                            data=file,
-                            file_name=filename,
-                            mime="image/jpeg",
-                            key=f"dl_{unique_key}"
-                        )
-                elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
-                    st.video(file_path)
-                    with open(file_path, "rb") as file:
-                        st.download_button(
-                            label="📥 Download Video",
-                            data=file,
-                            file_name=filename,
-                            mime="video/mp4",
-                            key=f"dl_{unique_key}"
-                        )
-
-    with tab_all:
-        render_gallery(saved_files, "all")
-        
-    with tab_70s:
-        render_gallery([f for f in saved_files if "70" in f.lower() or "meet" in f.lower()], "70s")
-        
-    with tab_boat:
-        render_gallery([f for f in saved_files if "boat" in f.lower() or "marina" in f.lower() or "ocean" in f.lower()], "boat")
-        
-    with tab_gala:
-        render_gallery([f for f in saved_files if "gala" in f.lower() or "black" in f.lower() or "w_" in f.lower()], "gala")
-        
-    with tab_bbq:
-        render_gallery([f for f in saved_files if "bbq" in f.lower() or "sunday" in f.lower() or "hora" in f.lower()], "bbq")
+                    # Fullscreen Lightbox expander view
+                    with st.expander(f"🔍 Fullscreen View##{unique_key}"):
+                        st.image(img, caption=filename, width='stretch')
+                except Exception:
+                    st.image(file_path, caption=filename, width='stretch')
+                
+                with open(file_path, "rb") as file:
+                    st.download_button(
+                        label="📥 Download Photo",
+                        data=file,
+                        file_name=filename,
+                        mime="image/jpeg",
+                        key=f"dl_{unique_key}"
+                    )
+            elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
+                st.video(file_path)
+                with open(file_path, "rb") as file:
+                    st.download_button(
+                        label="📥 Download Video",
+                        data=file,
+                        file_name=filename,
+                        mime="video/mp4",
+                        key=f"dl_{unique_key}"
+                    )
 
 st.markdown("---")
 
