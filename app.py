@@ -62,6 +62,10 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# --- HIGHLIGHT YOUTUBE VIDEO ---
+st.subheader("🎬 Celebration Highlight Video")
+st.video("https://www.youtube.com/watch?v=3cqJRqPMMvU")
+
 st.markdown("---")
 
 # --- GALLERY & MEDIA UPLOAD SECTION ---
@@ -82,7 +86,7 @@ if uploaded_files:
                 f.write(uploaded_file.getbuffer())
             try:
                 subprocess.run(["git", "add", file_path], check=True)
-                subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
+                subprocess.run(["git", "commit", -m f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
                 st.warning(f"Saved locally, git sync skipped: {e}")
