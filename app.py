@@ -33,18 +33,57 @@ st.markdown("""
         margin-bottom: 20px;
         border: 1px solid #dcfce7;
     }
+    .wish-box {
+        background-color: #fef2f2;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #fee2e2;
+        color: #991b1b;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # --- DIRECTORY SETUP ---
 UPLOAD_DIR = "uploaded_media"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+GUESTBOOK_FILE = "guestbook.txt"
 
 # --- HEADER & ARCHIVE STATUS ---
 st.title("🎉 NICKYBABES @ 50: THE MEMORY ARCHIVE ✨")
 st.markdown("*Reliving 4 days of grace, style, love, and unforgettable celebration!*")
 
 st.markdown('<div class="archive-box">💖 Welcome to the official photo sharing hub! Browse, download, and upload your favorite memories from Nicoline’s 50th Jubilee. 🥂✨</div>', unsafe_allow_html=True)
+
+st.markdown("---")
+
+# --- DIGITAL GUESTBOOK & WISHES WALL ---
+st.subheader("💌 Digital Guestbook & Wishes Wall")
+st.markdown("Leave a heartfelt birthday wish or personal memory for Nicoline below!")
+
+with st.form("guestbook_form", clear_on_submit=True):
+    guest_name = st.text_input("Your Name / Family")
+    guest_message = st.text_area("Your Birthday Wish or Message")
+    submit_wish = st.form_submit_button("💖 Send Wish")
+    
+    if submit_wish:
+        if guest_name.strip() and guest_message.strip():
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+            with open(GUESTBOOK_FILE, "a", encoding="utf-8") as f:
+                f.write(f"**{guest_name}** ({timestamp}):\n{guest_message}\n---\n")
+            st.success("✨ Your wish has been added to the Guestbook!")
+        else:
+            st.warning("Please enter both your name and a message before submitting.")
+
+# Display saved wishes
+if os.path.exists(GUESTBOOK_FILE):
+    with st.expander("📖 Read All Guestbook Wishes", expanded=True):
+        with open(GUESTBOOK_FILE, "r", encoding="utf-8") as f:
+            wishes_content = f.read()
+        wishes = wishes_content.split("---")
+        for wish in reversed(wishes):
+            if wish.strip():
+                st.markdown(f'<div class="wish-box">{wish.strip()}</div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
