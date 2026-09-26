@@ -153,7 +153,7 @@ if saved_files:
         "🍖 Sunday BBQ"
     ])
     
-    def render_gallery(file_subset):
+    def render_gallery(file_subset, tab_prefix):
         if not file_subset:
             st.info("No media found in this category yet.")
             return
@@ -162,6 +162,7 @@ if saved_files:
             file_path = os.path.join(UPLOAD_DIR, filename)
             col = gallery_cols[i % 3]
             with col:
+                unique_key = f"{tab_prefix}_{filename}_{i}"
                 if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
                     try:
                         img = Image.open(file_path)
@@ -169,7 +170,7 @@ if saved_files:
                         st.image(img, caption=filename, width='stretch')
                         
                         # Fullscreen Lightbox expander view
-                        with st.expander("🔍 Fullscreen View"):
+                        with st.expander(f"🔍 Fullscreen View##{unique_key}"):
                             st.image(img, caption=filename, width='stretch')
                     except Exception:
                         st.image(file_path, caption=filename, width='stretch')
@@ -180,7 +181,7 @@ if saved_files:
                             data=file,
                             file_name=filename,
                             mime="image/jpeg",
-                            key=f"dl_{filename}"
+                            key=f"dl_{unique_key}"
                         )
                 elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
                     st.video(file_path)
@@ -190,24 +191,23 @@ if saved_files:
                             data=file,
                             file_name=filename,
                             mime="video/mp4",
-                            key=f"dl_{filename}"
+                            key=f"dl_{unique_key}"
                         )
 
     with tab_all:
-        render_gallery(saved_files)
+        render_gallery(saved_files, "all")
         
     with tab_70s:
-        # Filter files or show all if general
-        render_gallery([f for f in saved_files if "70" in f.lower() or "meet" in f.lower()])
+        render_gallery([f for f in saved_files if "70" in f.lower() or "meet" in f.lower()], "70s")
         
     with tab_boat:
-        render_gallery([f for f in saved_files if "boat" in f.lower() or "marina" in f.lower() or "ocean" in f.lower()])
+        render_gallery([f for f in saved_files if "boat" in f.lower() or "marina" in f.lower() or "ocean" in f.lower()], "boat")
         
     with tab_gala:
-        render_gallery([f for f in saved_files if "gala" in f.lower() or "black" in f.lower() or "w_" in f.lower()])
+        render_gallery([f for f in saved_files if "gala" in f.lower() or "black" in f.lower() or "w_" in f.lower()], "gala")
         
     with tab_bbq:
-        render_gallery([f for f in saved_files if "bbq" in f.lower() or "sunday" in f.lower() or "hora" in f.lower()])
+        render_gallery([f for f in saved_files if "bbq" in f.lower() or "sunday" in f.lower() or "hora" in f.lower()], "bbq")
 
 st.markdown("---")
 
