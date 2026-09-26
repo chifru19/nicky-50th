@@ -66,7 +66,7 @@ st.markdown("""
 if os.path.exists("hero_video.mp4"):
     st.video("hero_video.mp4")
 elif os.path.exists("nicoline.jpg"):
-    st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", use_container_width=True)
+    st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", width="stretch")
 else:
     st.info("🖼️ Place `hero_video.mp4` or `nicoline.jpg` in the folder to update the cover media.")
 
@@ -87,7 +87,7 @@ with col1:
     st.markdown("### ⚓ Friday 18th September")
     st.markdown("**ALL WHITE • Boatride**")
     st.markdown("* 📍 [Marina de Albufeira (AlgarveExperience)](https://www.google.com/maps/search/?api=1&query=AlgarveExperience+Marina+de+Albufeira)")
-    st.markdown("* 👗 *Vibe Check:* Clean, Chic & Elegant All-White[cite: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]!")
+    st.markdown("* 👗 *Vibe Check:* Clean, Chic & Elegant All-White")
 
 with col2:
     st.markdown("### 🥂 Saturday 19th September")
@@ -128,7 +128,7 @@ if uploaded_files:
                 f.write(uploaded_file.getbuffer())
             try:
                 subprocess.run(["git", "add", file_path], check=True)
-                subprocess.run(["git", "commit", -m, f"Auto-upload archive: {uploaded_file.name}"], check=True)
+                subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
                 st.warning(f"Saved locally, git sync skipped: {e}")
@@ -146,7 +146,7 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                st.image(file_path, caption=filename, use_container_width=True)
+                st.image(file_path, caption=filename, width="stretch")
             elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
                 st.video(file_path)
 
