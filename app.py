@@ -33,14 +33,6 @@ st.markdown("""
         margin-bottom: 20px;
         border: 1px solid #dcfce7;
     }
-    .music-box {
-        background-color: #f8fafc;
-        padding: 10px;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 20px;
-        border: 1px solid #e2e8f0;
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -53,14 +45,6 @@ st.title("🎉 NICKYBABES @ 50: THE MEMORY ARCHIVE ✨")
 st.markdown("*Reliving 4 days of grace, style, love, and unforgettable celebration!*")
 
 st.markdown('<div class="archive-box">💖 Welcome to the official photo sharing hub! Browse, download, and upload your favorite memories from Nicoline’s 50th Jubilee. 🥂✨</div>', unsafe_allow_html=True)
-
-# --- SPOTIFY PLAYLIST PLAYER (AD-FREE) ---
-st.markdown("""
-    <div class="music-box">
-        <p style="margin: 0 0 5px 0; font-weight: bold; color: #1e293b; font-size: 1rem;">🎶 Nicoline's Celebration Official Playlist</p>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7sbwzGf6xs7nW9r2LtNw9H?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
-""", unsafe_allow_html=True)
 
 # --- HIGHLIGHT YOUTUBE VIDEO ---
 st.subheader("🎬 Celebration Highlight Video")
