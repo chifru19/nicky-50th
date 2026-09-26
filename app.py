@@ -44,9 +44,29 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- DIRECTORY SETUP ---
+# --- DIRECTORY SETUP & AUTO-RENAME UTILITY ---
 UPLOAD_DIR = "uploaded_media"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# Automatically rename raw camera files on startup if they exist
+rename_mapping = {
+    "IMG_0668.jpg": "marina_welcome_greeting.jpg",
+    "IMG_0669.jpg": "boat_party_warm_hug.jpg",
+    "IMG_0670.jpg": "all_white_group_chat.jpg",
+    "IMG_0671.jpg": "marina_dock_laughs.jpg",
+    "IMG_0672.jpg": "sunny_day_dock_pose.jpg",
+    "IMG_0676.jpg": "captain_and_friends_posse.jpg",
+    "IMG_0679.jpg": "marina_lounge_vibes.jpg",
+    "IMG_0689.jpg": "catamaran_dance_move.jpg",
+    "IMG_0690.jpg": "jubilee_boat_celebration.jpg",
+    "IMG_0692.jpg": "ocean_deck_snapshots.jpg"
+}
+
+for old_name, new_name in rename_mapping.items():
+    old_p = os.path.join(UPLOAD_DIR, old_name)
+    new_p = os.path.join(UPLOAD_DIR, new_name)
+    if os.path.exists(old_p) and not os.path.exists(new_p):
+        os.rename(old_p, new_p)
 
 # --- HEADER & ARCHIVE STATUS ---
 st.title("🎉 NICKYBABES @ 50: THE MEMORY ARCHIVE ✨")
@@ -66,7 +86,7 @@ st.markdown("""
 if os.path.exists("hero_video.mp4"):
     st.video("hero_video.mp4")
 elif os.path.exists("nicoline.jpg"):
-    st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee", width="stretch")
+    st.image("nicoline.jpg", caption="Celebrating Nicoline Che's 50th Jubilee")
 else:
     st.info("🖼️ Place `hero_video.mp4` or `nicoline.jpg` in the folder to update the cover media.")
 
@@ -146,7 +166,7 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                st.image(file_path, caption=filename, width="stretch")
+                st.image(file_path, caption=filename.replace('.jpg', '').replace('_', ' ').title())
             elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
                 st.video(file_path)
 
