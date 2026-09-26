@@ -66,21 +66,13 @@ st.markdown("---")
 
 # --- GALLERY & MEDIA UPLOAD SECTION ---
 st.subheader("📸 Event Photo & Video Gallery")
-st.markdown("Upload new photos/videos or browse the collection below. Click on any image or use your device options to download/save your favorite moments!")
+st.markdown("Upload new memories or browse the collection below. Use the **Download** button under any photo or video to save it directly to your device!")
 
 uploaded_files = st.file_uploader(
     "Upload your photos or videos...", 
     type=["jpg", "jpeg", "png", "mp4", "mov", "avi"], 
     accept_multiple_files=True
 )
-
-youtube_url = st.text_input("🔗 Or paste a YouTube Video Link here:")
-
-if youtube_url:
-    try:
-        st.video(youtube_url)
-    except Exception as e:
-        st.error("Please enter a valid YouTube URL.")
 
 if uploaded_files:
     for uploaded_file in uploaded_files:
@@ -109,8 +101,24 @@ if saved_files:
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
                 st.image(file_path, caption=filename, use_container_width=True)
+                with open(file_path, "rb") as file:
+                    st.download_button(
+                        label="📥 Download Photo",
+                        data=file,
+                        file_name=filename,
+                        mime="image/jpeg",
+                        key=f"dl_{filename}"
+                    )
             elif filename.lower().endswith(('.mp4', '.mov', '.avi')):
                 st.video(file_path)
+                with open(file_path, "rb") as file:
+                    st.download_button(
+                        label="📥 Download Video",
+                        data=file,
+                        file_name=filename,
+                        mime="video/mp4",
+                        key=f"dl_{filename}"
+                    )
 
 st.markdown("---")
 
