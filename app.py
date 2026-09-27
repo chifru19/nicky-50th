@@ -55,6 +55,10 @@ st.markdown("*Reliving 4 days of grace, style, love, and unforgettable celebrati
 
 st.markdown('<div class="archive-box">💖 Welcome to the official photo sharing hub! Browse, download, and upload your favorite memories from Nicoline’s 50th Jubilee. 🥂✨</div>', unsafe_allow_html=True)
 
+# --- YOUTUBE HIGHLIGHT VIDEO SECTION ---
+st.subheader("🎬 Celebration Highlight Video")
+st.video("https://youtu.be/3cqJRqPMMvU")
+
 st.markdown("---")
 
 # --- DIGITAL GUESTBOOK & WISHES WALL ---
@@ -105,7 +109,7 @@ if uploaded_files:
                 f.write(uploaded_file.getbuffer())
             try:
                 subprocess.run(["git", "add", file_path], check=True)
-                subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
+                subprocess.run(["git", "commit", -m, f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
                 st.warning(f"Saved locally, git sync skipped: {e}")
