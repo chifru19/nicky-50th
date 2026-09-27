@@ -145,6 +145,7 @@ if uploaded_files:
                         img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
                     img.save(file_path, "JPEG", quality=85)
                 except Exception:
+                    pass
         pass
                         # Optimized image compression on upload
                         try:
@@ -158,6 +159,7 @@ if uploaded_files:
                                 img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
                             img.save(file_path, "JPEG", quality=80)
                         except Exception:
+                            pass
         pass
                                 f.write(uploaded_file.getbuffer())
             
@@ -168,6 +170,7 @@ if uploaded_files:
                     img = ImageOps.exif_transpose(img)
                     img.save(file_path)
                 except Exception:
+                    pass
         pass
 
             try:
@@ -175,6 +178,7 @@ if uploaded_files:
                 subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
+                pass
         pass
 
     st.success("✨ New memories added and saved successfully!")
@@ -195,6 +199,7 @@ if saved_files:
                     pil_img = ImageOps.exif_transpose(pil_img)
                     st.image(pil_img, caption=filename, width="stretch")
                 except Exception:
+                    pass
         pass
 
                 with open(file_path, "rb") as file:
