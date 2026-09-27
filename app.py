@@ -2,6 +2,7 @@ import os
 import subprocess
 from datetime import datetime
 import streamlit as st
+from PIL import Image
 
 # --- PAGE CONFIG ---
 st.set_page_config(
@@ -107,9 +108,22 @@ if uploaded_files:
         if not os.path.exists(file_path):
             with open(file_path, "wb") as f:
                 f.write(uploaded_file.getbuffer())
+            
+            # Auto-rotate image based on EXIF orientation if it's an image
+            if uploaded_file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
+                try:
+                    img = Image.open(file_path)
+                    img = img.transpose(Image.ROTATE_180) # Adjust if needed or use exif transpose
+                    # Better EXIF transposition:
+                    from PIL import ImageOps
+                    img = ImageOps.exif_transpose(img)
+                    img.save(file_path)
+                except Exception:
+                    pass
+
             try:
                 subprocess.run(["git", "add", file_path], check=True)
-                subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
+                subprocess.run(["git", "commit", -m, f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
                 st.warning(f"Saved locally, git sync skipped: {e}")
@@ -127,7 +141,15 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                st.image(file_path, caption=filename, use_container_width=True)
+                try:
+                    # Open and fix EXIF orientation on display
+                    pil_img = Image.open(file_path)
+                    from PIL import ImageOps
+                    pil_img = ImageOps.exif_transpose(pil_img)
+                    st.image(pil_img, caption=filename, use_container_width=True)
+                except Exception:
+                    st.image(file_path, caption=filename, use_container_width=True)
+
                 with open(file_path, "rb") as file:
                     st.download_button(
                         label="📥 Download Photo",
