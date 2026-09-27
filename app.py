@@ -9,11 +9,11 @@ def check_and_init_git():
     try:
         subprocess.run(["git", "config", "user.name"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except Exception:
-    pass
+        pass
     try:
         subprocess.run(["git", "config", "user.email"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except Exception:
-    pass
+        pass
 
 def handle_git_commit(file_name):
     try:
@@ -21,7 +21,7 @@ def handle_git_commit(file_name):
         subprocess.run(["git", "add", file_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
         subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {file_name}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     except Exception:
-    pass
+        pass
         pass
 
 import os
@@ -145,7 +145,7 @@ if uploaded_files:
                         img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
                     img.save(file_path, "JPEG", quality=85)
                 except Exception:
-    pass
+        pass
                         # Optimized image compression on upload
                         try:
                             from PIL import Image
@@ -158,7 +158,7 @@ if uploaded_files:
                                 img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
                             img.save(file_path, "JPEG", quality=80)
                         except Exception:
-    pass
+        pass
                                 f.write(uploaded_file.getbuffer())
             
             # Auto-rotate image based on EXIF orientation if it's an image
@@ -168,14 +168,14 @@ if uploaded_files:
                     img = ImageOps.exif_transpose(img)
                     img.save(file_path)
                 except Exception:
-    pass
+        pass
 
             try:
                 subprocess.run(["git", "add", file_path], check=True)
                 subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
-                pass
+        pass
 
     st.success("✨ New memories added and saved successfully!")
 
@@ -195,7 +195,7 @@ if saved_files:
                     pil_img = ImageOps.exif_transpose(pil_img)
                     st.image(pil_img, caption=filename, width="stretch")
                 except Exception:
-    pass
+        pass
 
                 with open(file_path, "rb") as file:
                     st.download_button(
