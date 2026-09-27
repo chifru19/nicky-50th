@@ -6,8 +6,14 @@ def check_and_init_git():
     """Ensures a git repo is initialized and configured locally."""
     if not os.path.exists(".git"):
         subprocess.run(["git", "init"], check=True)
-    subprocess.run(["git", "config", "user.name", "Frank Fru"], check=True)
-    subprocess.run(["git", "config", "user.email", "chifru19@googlemail.com"], check=True)
+    try:
+        subprocess.run(["git", "config", "user.name"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        subprocess.run(["git", "config", "user.name", "Frank Fru"], check=True)
+    try:
+        subprocess.run(["git", "config", "user.email"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        subprocess.run(["git", "config", "user.email", "chifru19@googlemail.com"], check=True)
 
 def handle_git_commit(file_name):
     try:
