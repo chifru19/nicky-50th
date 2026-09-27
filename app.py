@@ -1,3 +1,22 @@
+
+import subprocess
+import os
+
+def check_and_init_git():
+    """Ensures a git repo is initialized and configured locally."""
+    if not os.path.exists(".git"):
+        subprocess.run(["git", "init"], check=True)
+    subprocess.run(["git", "config", "user.name", "Frank Fru"], check=True)
+    subprocess.run(["git", "config", "user.email", "chifru19@googlemail.com"], check=True)
+
+def handle_git_commit(file_name):
+    try:
+        check_and_init_git()
+        subprocess.run(["git", "add", file_name], check=True)
+        subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {file_name}"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Git sync skipped due to error: {e}")
+
 import os
 import subprocess
 from datetime import datetime
