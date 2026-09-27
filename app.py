@@ -2,7 +2,7 @@ import os
 import subprocess
 from datetime import datetime
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageOps
 
 # --- PAGE CONFIG ---
 st.set_page_config(
@@ -113,9 +113,6 @@ if uploaded_files:
             if uploaded_file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
                 try:
                     img = Image.open(file_path)
-                    img = img.transpose(Image.ROTATE_180) # Adjust if needed or use exif transpose
-                    # Better EXIF transposition:
-                    from PIL import ImageOps
                     img = ImageOps.exif_transpose(img)
                     img.save(file_path)
                 except Exception:
@@ -142,9 +139,7 @@ if saved_files:
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
                 try:
-                    # Open and fix EXIF orientation on display
                     pil_img = Image.open(file_path)
-                    from PIL import ImageOps
                     pil_img = ImageOps.exif_transpose(pil_img)
                     st.image(pil_img, caption=filename, use_container_width=True)
                 except Exception:
@@ -174,7 +169,7 @@ st.markdown("---")
 # --- FOOTER ---
 st.markdown(
     "<div style='text-align: center; color: gray; font-size: 0.9rem;'>"
-    "Created with ❤️ by <b>Frank Fru</b> for Nicoline Che's 50th Jubilee | "
+    "Created with ❤️ by <b>Chi Barison Fru</b> for Nicoline Che's 50th Jubilee | "
     "<a href='https://frankfru.com'>frankfru.com</a> | "
     "<a href='https://github.com/chifru19'>GitHub</a> | "
     "<a href='https://www.linkedin.com/in/chifru19'>LinkedIn</a>"
