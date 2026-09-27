@@ -139,7 +139,20 @@ if uploaded_files:
                     img.save(file_path, "JPEG", quality=85)
                 except Exception:
                     with open(file_path, "wb") as f:
-                        f.write(uploaded_file.getbuffer())
+                        # Optimized image compression on upload
+                        try:
+                            from PIL import Image
+                            img = Image.open(uploaded_file)
+                            img = img.convert("RGB")
+                            max_width = 1200
+                            if img.width > max_width:
+                                ratio = max_width / float(img.width)
+                                new_height = int(float(img.height) * ratio)
+                                img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
+                            img.save(file_path, "JPEG", quality=80)
+                        except Exception:
+                            with open(file_path, "wb") as f:
+                                f.write(uploaded_file.getbuffer())
             
             # Auto-rotate image based on EXIF orientation if it's an image
             if uploaded_file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
