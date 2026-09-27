@@ -6,23 +6,16 @@ def check_and_init_git():
     """Ensures a git repo is initialized and configured locally."""
     if not os.path.exists(".git"):
         subprocess.run(["git", "init"], check=True)
-    try:
-        subprocess.run(["git", "config", "user.name"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except Exception:
-        pass
-    try:
-        subprocess.run(["git", "config", "user.email"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except Exception:
-        pass
+    subprocess.run(["git", "config", "user.name", "Frank Fru"], check=True)
+    subprocess.run(["git", "config", "user.email", "chifru19@googlemail.com"], check=True)
 
 def handle_git_commit(file_name):
     try:
         check_and_init_git()
-        subprocess.run(["git", "add", file_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-        subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {file_name}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-    except Exception:
-        pass
-        pass
+        subprocess.run(["git", "add", file_name], check=True)
+        subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {file_name}"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Git sync skipped due to error: {e}")
 
 import os
 import subprocess
@@ -145,23 +138,8 @@ if uploaded_files:
                         img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
                     img.save(file_path, "JPEG", quality=85)
                 except Exception:
-                    pass
-        pass
-                        # Optimized image compression on upload
-                        try:
-                            from PIL import Image
-                            img = Image.open(uploaded_file)
-                            img = img.convert("RGB")
-                            max_width = 1200
-                            if img.width > max_width:
-                                ratio = max_width / float(img.width)
-                                new_height = int(float(img.height) * ratio)
-                                img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
-                            img.save(file_path, "JPEG", quality=80)
-                        except Exception:
-                            pass
-        pass
-                                f.write(uploaded_file.getbuffer())
+                    with open(file_path, "wb") as f:
+                        f.write(uploaded_file.getbuffer())
             
             # Auto-rotate image based on EXIF orientation if it's an image
             if uploaded_file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
@@ -171,15 +149,13 @@ if uploaded_files:
                     img.save(file_path)
                 except Exception:
                     pass
-        pass
 
             try:
                 subprocess.run(["git", "add", file_path], check=True)
                 subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
-                pass
-        pass
+                st.warning(f"Saved locally, git sync skipped: {e}")
 
     st.success("✨ New memories added and saved successfully!")
 
@@ -199,8 +175,7 @@ if saved_files:
                     pil_img = ImageOps.exif_transpose(pil_img)
                     st.image(pil_img, caption=filename, width="stretch")
                 except Exception:
-                    pass
-        pass
+                    st.image(file_path, caption=filename, width="stretch")
 
                 with open(file_path, "rb") as file:
                     st.download_button(
@@ -233,6 +208,3 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True,
 )
-
-
-
