@@ -175,7 +175,7 @@ if uploaded_files:
                 subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
-                st.warning(f"Saved locally, git sync skipped: {e}")
+                # st.warning: {e}")
 
     st.success("✨ New memories added and saved successfully!")
 
