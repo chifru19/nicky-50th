@@ -141,9 +141,9 @@ if saved_files:
                 try:
                     pil_img = Image.open(file_path)
                     pil_img = ImageOps.exif_transpose(pil_img)
-                    st.image(pil_img, caption=filename, use_container_width=True)
+                    st.image(pil_img, caption=filename, width="stretch")
                 except Exception:
-                    st.image(file_path, caption=filename, use_container_width=True)
+                    st.image(file_path, caption=filename, width="stretch")
 
                 with open(file_path, "rb") as file:
                     st.download_button(
