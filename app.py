@@ -18,10 +18,11 @@ def check_and_init_git():
 def handle_git_commit(file_name):
     try:
         check_and_init_git()
-        subprocess.run(["git", "add", file_name], check=True)
-        subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {file_name}"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Git sync skipped due to error: {e}")
+        subprocess.run(["git", "add", file_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {file_name}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+    except Exception:
+        # Silently bypass git commit on cloud environments if restricted
+        pass
 
 import os
 import subprocess
