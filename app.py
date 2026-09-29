@@ -1,27 +1,7 @@
-
-import subprocess
-import os
-
-def check_and_init_git():
-    """Ensures a git repo is initialized and configured locally."""
-    if not os.path.exists(".git"):
-        subprocess.run(["git", "init"], check=True)
-    subprocess.run(["git", "config", "user.name", "Frank Fru"], check=True)
-    subprocess.run(["git", "config", "user.email", "chifru19@googlemail.com"], check=True)
-
-def handle_git_commit(file_name):
-    try:
-        check_and_init_git()
-        subprocess.run(["git", "add", file_name], check=True)
-        subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {file_name}"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Git sync skipped due to error: {e}")
-
 import os
 import subprocess
 from datetime import datetime
 import streamlit as st
-from PIL import Image, ImageOps
 
 # --- PAGE CONFIG ---
 st.set_page_config(
@@ -53,13 +33,13 @@ st.markdown("""
         margin-bottom: 20px;
         border: 1px solid #dcfce7;
     }
-    .wish-box {
-        background-color: #fef2f2;
-        padding: 12px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #fee2e2;
-        color: #991b1b;
+    .music-box {
+        background-color: #f8fafc;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 1px solid #e2e8f0;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -67,7 +47,6 @@ st.markdown("""
 # --- DIRECTORY SETUP ---
 UPLOAD_DIR = "uploaded_media"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
-GUESTBOOK_FILE = "guestbook.txt"
 
 # --- HEADER & ARCHIVE STATUS ---
 st.title("🎉 NICKYBABES @ 50: THE MEMORY ARCHIVE ✨")
@@ -75,39 +54,13 @@ st.markdown("*Reliving 4 days of grace, style, love, and unforgettable celebrati
 
 st.markdown('<div class="archive-box">💖 Welcome to the official photo sharing hub! Browse, download, and upload your favorite memories from Nicoline’s 50th Jubilee. 🥂✨</div>', unsafe_allow_html=True)
 
-# --- YOUTUBE HIGHLIGHT VIDEO SECTION ---
-st.subheader("🎬 Celebration Highlight Video")
-st.video("https://youtu.be/3cqJRqPMMvU")
-
-st.markdown("---")
-
-# --- DIGITAL GUESTBOOK & WISHES WALL ---
-st.subheader("💌 Digital Guestbook & Wishes Wall")
-st.markdown("Leave a heartfelt birthday wish or personal memory for Nicoline below!")
-
-with st.form("guestbook_form", clear_on_submit=True):
-    guest_name = st.text_input("Your Name / Family")
-    guest_message = st.text_area("Your Birthday Wish or Message")
-    submit_wish = st.form_submit_button("💖 Send Wish")
-    
-    if submit_wish:
-        if guest_name.strip() and guest_message.strip():
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
-            with open(GUESTBOOK_FILE, "a", encoding="utf-8") as f:
-                f.write(f"**{guest_name}** ({timestamp}):\n{guest_message}\n---\n")
-            st.success("✨ Your wish has been added to the Guestbook!")
-        else:
-            st.warning("Please enter both your name and a message before submitting.")
-
-# Display saved wishes
-if os.path.exists(GUESTBOOK_FILE):
-    with st.expander("📖 Read All Guestbook Wishes", expanded=True):
-        with open(GUESTBOOK_FILE, "r", encoding="utf-8") as f:
-            wishes_content = f.read()
-        wishes = wishes_content.split("---")
-        for wish in reversed(wishes):
-            if wish.strip():
-                st.markdown(f'<div class="wish-box">{wish.strip()}</div>', unsafe_allow_html=True)
+# --- SPOTIFY PLAYLIST PLAYER (AD-FREE) ---
+st.markdown("""
+    <div class="music-box">
+        <p style="margin: 0 0 5px 0; font-weight: bold; color: #1e293b; font-size: 1rem;">🎶 Nicoline's Celebration Official Playlist</p>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7sbwzGf6xs7nW9r2LtNw9H?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -126,33 +79,10 @@ if uploaded_files:
         file_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
         if not os.path.exists(file_path):
             with open(file_path, "wb") as f:
-                # Optimized image compression on upload
-                try:
-                    from PIL import Image
-                    img = Image.open(uploaded_file)
-                    img = img.convert("RGB")
-                    max_width = 1200
-                    if img.width > max_width:
-                        ratio = max_width / float(img.width)
-                        new_height = int(float(img.height) * ratio)
-                        img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
-                    img.save(file_path, "JPEG", quality=85)
-                except Exception:
-                    with open(file_path, "wb") as f:
-                        f.write(uploaded_file.getbuffer())
-            
-            # Auto-rotate image based on EXIF orientation if it's an image
-            if uploaded_file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
-                try:
-                    img = Image.open(file_path)
-                    img = ImageOps.exif_transpose(img)
-                    img.save(file_path)
-                except Exception:
-                    pass
-
+                f.write(uploaded_file.getbuffer())
             try:
                 subprocess.run(["git", "add", file_path], check=True)
-                subprocess.run(["git", "commit", "-m", f"Auto-upload archive: {uploaded_file.name}"], check=True)
+                subprocess.run(["git", "commit", -m, f"Auto-upload archive: {uploaded_file.name}"], check=True)
                 subprocess.run(["git", "push"], check=True)
             except Exception as e:
                 st.warning(f"Saved locally, git sync skipped: {e}")
@@ -160,7 +90,7 @@ if uploaded_files:
     st.success("✨ New memories added and saved successfully!")
 
 raw_saved_files = os.listdir(UPLOAD_DIR)
-saved_files = sorted(list(set([f for f in raw_saved_files if not f.startswith(".") and f != "nicoline.jpg"])))
+saved_files = [f for f in sorted(raw_saved_files) if not f.startswith(".") and f != "nicoline.jpg"]
 
 if saved_files:
     st.markdown("### 🌟 Shared Memory Collection")
@@ -170,13 +100,7 @@ if saved_files:
         col = gallery_cols[i % 3]
         with col:
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                try:
-                    pil_img = Image.open(file_path)
-                    pil_img = ImageOps.exif_transpose(pil_img)
-                    st.image(pil_img, caption=filename, width="stretch")
-                except Exception:
-                    st.image(file_path, caption=filename, width="stretch")
-
+                st.image(file_path, caption=filename, use_container_width=True)
                 with open(file_path, "rb") as file:
                     st.download_button(
                         label="📥 Download Photo",
@@ -201,7 +125,7 @@ st.markdown("---")
 # --- FOOTER ---
 st.markdown(
     "<div style='text-align: center; color: gray; font-size: 0.9rem;'>"
-    "Created with ❤️ by <b>Chi Barison Fru</b> for Nicoline Che's 50th Jubilee | "
+    "Created with ❤️ by <b>Frank Fru</b> for Nicoline Che's 50th Jubilee | "
     "<a href='https://frankfru.com'>frankfru.com</a> | "
     "<a href='https://github.com/chifru19'>GitHub</a> | "
     "<a href='https://www.linkedin.com/in/chifru19'>LinkedIn</a>"
